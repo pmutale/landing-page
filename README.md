@@ -1,4 +1,5 @@
 # Familie Mutale
+The goal is to create a one page web application 
 
 How to install:
 * Clone branch in your local environment
@@ -15,3 +16,5 @@ git branch -b  'name_of_your_branch'
 ```
 TIP: *Always create a branch for each aspect. DO NOT push to master*
 * Start Coding :+1
+Check tickets on:
+[Ticket Seystem] (https://github.com/pmutale/landing-page/projects/1)
