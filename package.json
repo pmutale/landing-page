@@ -1,0 +1,34 @@
+{
+  "name": "familie-mutale",
+  "version": "1.0.0",
+  "description": "This is a landing page for the Family website.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \\\"Error: no test specified\\\" && exit 1",
+    "start": "webpack --config ./webpack/webpack.config.js --progress"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/pmutale/landing-page.git"
+  },
+  "author": "P. Mutale",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pmutale/landing-page/issues"
+  },
+  "homepage": "https://github.com/pmutale/landing-page#readme",
+  "devDependencies": {
+    "babel": "^6.23.0",
+    "babel-loader": "^7.1.2",
+    "react": "^16.0.0",
+    "react-hot-loader": "^1.3.1",
+    "webpack": "^3.6.0",
+    "webpack-bundle-tracker": "^0.2.0",
+    "webpack-dev-server": "^2.9.1"
+  },
+  "dependencies": {
+    "react-dom": "^16.0.0",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2"
+  }
+}
