@@ -11,7 +11,7 @@ virutalenv venv
 ```
 * Create a new branch
 ```
-git branch -b { name_of_your_branch }
+git branch -b  'name_of_your_branch'
 ```
 TIP: *Always create a branch for each aspect. DO NOT push to master*
 * Start Coding :+1
