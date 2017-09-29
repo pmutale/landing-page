@@ -18,4 +18,4 @@ TIP: *Always create a branch for each aspect. DO NOT push to master*
 * Start Coding :+1
 
 Check tickets on:
-* [Ticket Seystem](https://github.com/pmutale/landing-page/projects/1)
+* [Ticket System](https://github.com/pmutale/landing-page/projects/1)
