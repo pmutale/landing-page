@@ -1,3 +1,4 @@
+from mysite import secrets
 from settings.core import *
 
 STATIC_URL = '/static/'
@@ -49,7 +50,8 @@ MIDDLEWARE = (
     'cms.middleware.user.CurrentUserMiddleware',
     'cms.middleware.page.CurrentPageMiddleware',
     'cms.middleware.toolbar.ToolbarMiddleware',
-    'cms.middleware.language.LanguageCookieMiddleware'
+    'cms.middleware.language.LanguageCookieMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware'
 )
 
 INSTALLED_APPS = (
@@ -79,7 +81,8 @@ INSTALLED_APPS = (
     'djangocms_snippet',
     'djangocms_googlemap',
     'djangocms_video',
-    'mysite'
+    'mysite',
+    'debug_toolbar'
 )
 
 LANGUAGES = (
@@ -153,6 +156,31 @@ COLUMN_WIDTH_CHOICES = (
     ('100%', '100%'),
 )
 
+def read_pgpass(dbname):
+    import os
+    try:
+        pgpass = os.path.join(os.environ['HOME'], '.pgpass')
+        pgpass_lines = open(pgpass).read().split()
+    except IOError:
+        pass
+    else:
+        for match in (dbname, '*'):
+            for line in pgpass_lines:
+                words = line.strip().split(':')
+                if words[2] == match:
+                    return {
+                        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+                        'NAME': dbname,
+                        'USER': words[3],
+                        'PASSWORD': words[4],
+                        'HOST': words[0],
+                    }
+    return {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'var', '%s.db' % dbname),
+    }
+
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 DEFAULT_FROM_EMAIL = 'webmaster@mutale.nl'
@@ -163,59 +191,39 @@ CMSPLUGIN_FILER_IMAGE_STYLE_CHOICES = (
 )
 CMSPLUGIN_FILER_IMAGE_DEFAULT_STYLE = 'boxed'
 
-LOGIN_URL = '/accounts/login/'
+# LOGIN_URL = '/accounts/login/'
 
-LOGIN_REDIRECT_URL = '/project/'
+# LOGIN_REDIRECT_URL = '/project/'
 
-AUTH_USER_MODEL = 'registration.User'
+# AUTH_USER_MODEL = 'registration.User'
 
-GOOGLE_ANALYTICS_PROPERTY_ID = 'UA-63318042-2'
+GOOGLE_ANALYTICS_PROPERTY_ID = 'UA-63318042-1'
 
 LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'locale/'),
 )
-
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
-        },
-        'simple': {
-            'format': '%(levelname)s %(message)s'
-        },
-    },
-    'filters': {
-        'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse',
-        },
-    },
     'handlers': {
         'console': {
-            'level': 'INFO',
-            'filters': ['require_debug_false'],
             'class': 'logging.StreamHandler',
-            'formatter': 'simple'
         },
-        'mail_admins': {
-            'level': 'ERROR',
-            'class': 'django.utils.log.AdminEmailHandler',
-            'filters': ['require_debug_false']
-        }
     },
     'loggers': {
         'django': {
             'handlers': ['console'],
-            'propagate': True,
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
         },
-        'django.request': {
-            'handlers': ['mail_admins'],
-            'level': 'ERROR',
-            'propagate': False,
-        }
-    }
+    },
 }
 
+CACHES = secrets.get_cache()
 
 CACHES = secrets.get_cache()
+
+CACHE_MIDDLEWARE_KEY_PREFIX = 'www_mutale_familie_cache'
+
+CACHE_MIDDLEWARE_SECONDS = 600
+
+CACHE_MIDDLEWARE_ALIAS = 'default'

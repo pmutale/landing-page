@@ -1,6 +1,5 @@
 from settings.environments.base import *
-import dj_database_url
-from mysite import secrets
+from mysite.secrets import read_mailpass
 
 DEBUG = False
 
@@ -13,17 +12,67 @@ DATABASE_URL = 'postgres://oysvyfogshjfhl:e56fa02595e51fc13be095829b3d2cc2de793d
 
 DATABASES = {
     'default':
-        dj_database_url.config(default=DATABASE_URL)
+        read_pgpass('dblbotgd0su41h')
 }
 
 DATABASES['default']['CONN_MAX_AGE'] = 500
 
-EMAIL_HOST = secrets.email_settings['host']
 
-EMAIL_PORT = secrets.email_settings['port']
+email_settings = read_mailpass('webmaster@mutale.nl')
 
-EMAIL_HOST_USER = secrets.email_settings['user']
 
-EMAIL_HOST_PASSWORD = secrets.email_settings['password']
+EMAIL_HOST = email_settings['host']
 
-EMAIL_USE_SSL = secrets.email_settings['ssl']
+
+EMAIL_PORT = email_settings['port']
+
+
+EMAIL_HOST_USER = email_settings['user']
+
+
+EMAIL_HOST_PASSWORD = email_settings['password']
+
+
+EMAIL_USE_SSL = email_settings['ssl']
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'INFO',
+            'filters': ['require_debug_false'],
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+            'filters': ['require_debug_false']
+        }
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'propagate': True,
+        },
+        'django.request': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': False,
+        }
+    }
+}
