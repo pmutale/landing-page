@@ -102,3 +102,4 @@ ENV/
 /package-lock.json
 /webpack-stats.json
 /node_modules/
+.eslintrc.json

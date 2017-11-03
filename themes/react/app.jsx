@@ -1,15 +1,23 @@
-const React = require('react');
-import Index from './index';
+// import 'react-hot-loader/path';
+require("react-hot-loader/patch")
+import ReactDOM from'react-dom';
+import React from 'react';
+import Greeting from './greeting';
+import { AppContainer } from 'react-hot-loader';
 
-class MutaleApp extends React.Component{
-    render(){
-        return (
-            <div>
-                <Index/>
-            </div>
-        )
-    }
+
+const renderApp = Component => {
+	ReactDOM.render(
+		<AppContainer>
+			<Component />
+		</AppContainer>,
+		document.getElementById('magic_act')
+	)
 }
 
+renderApp(Greeting)
 
-React.render(<MutaleApp/>, document.getElementById('magic_act'));
+
+if (module.hot) {
+	module.hot.accept();
+}

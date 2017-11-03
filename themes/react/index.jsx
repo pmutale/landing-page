@@ -1,7 +1,18 @@
-const React = require('react');
+import React from 'react';
+import { render } from'react-dom';
 
-module.exports = React.create.Class({
-    render: function () {
-        return <h1>Hello World</h1>
-    }
-});
+class App extends React.Component {
+	render () {
+		return (
+			<div className='container'>
+				<div className='row'>
+					<div className='col-xs-10 col-xs-offset-1'>
+						<h1>Hallo there, I am Peter</h1>
+					</div>
+				</div>
+			</div>
+		);
+	}
+}
+
+render(<App/>, window.document.getElementById('magic_act'));
