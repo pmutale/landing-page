@@ -10,6 +10,10 @@ git clone https://github.com/pmutale/landing-page.git
 ```
 virutalenv venv
 ```
+* Install requirements
+```
+pip install -r requirements.txt
+```
 * Create a new branch
 ```
 git branch -b  'name_of_your_branch'
