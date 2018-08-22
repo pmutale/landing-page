@@ -82,7 +82,11 @@ INSTALLED_APPS = (
     'djangocms_googlemap',
     'djangocms_video',
     'mysite',
-    'debug_toolbar'
+    'debug_toolbar',
+    'webpack_loader',
+
+    # Apps
+    'themes',
 )
 
 LANGUAGES = (
@@ -220,10 +224,15 @@ LOGGING = {
 
 CACHES = secrets.get_cache()
 
-CACHES = secrets.get_cache()
-
 CACHE_MIDDLEWARE_KEY_PREFIX = 'www_mutale_familie_cache'
 
 CACHE_MIDDLEWARE_SECONDS = 600
 
 CACHE_MIDDLEWARE_ALIAS = 'default'
+
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'BUNDLE_DIR_NAME': 'bundles/',
+        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
+    }
+}

@@ -99,3 +99,7 @@ ENV/
 
 # mypy
 .mypy_cache/
+/package-lock.json
+/webpack-stats.json
+/node_modules/
+.eslintrc.json
