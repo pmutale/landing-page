@@ -6,7 +6,7 @@ django-classy-tags==0.8.0
 django-cms==3.4.4
 django-debug==0.1.1
 django-debug-toolbar==1.8
-django-filer==1.2.8
+django-filer==3.0.0rc1
 django-formtools==2.0
 django-mptt==0.8.7
 django-polymorphic==1.0.2
